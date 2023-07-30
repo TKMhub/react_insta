@@ -174,10 +174,7 @@ export const {
 
 export const selectIsLoadingpost = (state: RootState) =>
   state.post.isLoadingpost;
-export const selectOpenSignIn = (state: RootState) => state.post.openSignIn;
-export const selectOpenSignUp = (state: RootState) => state.post.openSignUp;
-export const selectOpenProfile = (state: RootState) => state.post.openProfile;
-export const selectProfile = (state: RootState) => state.post.myprofile;
-export const selectProfiles = (state: RootState) => state.post.profiles;
-
+export const selectOpenNewPost = (state: RootState) => state.post.openNewPost;
+export const selectPosts = (state: RootState) => state.post.posts;
+export const selectComments = (state: RootState) => state.post.comments;
 export default postSlice.reducer;
