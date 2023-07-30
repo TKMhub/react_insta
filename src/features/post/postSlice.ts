@@ -130,37 +130,46 @@ export const postSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchAsyncLogin.fulfilled, (state, action) => {
-      localStorage.setItem("localJWT", action.payload.access);
+    builder.addCase(fetchAsyncGetPosts.fulfilled, (state, action) => {
+      return {
+        ...state,
+        posts: action.payload,
+      };
     });
-    builder.addCase(fetchAsyncCreateProf.fulfilled, (state, action) => {
-      state.myprofile = action.payload;
+    builder.addCase(fetchAsyncNewPost.fulfilled, (state, action) => {
+      return {
+        ...state,
+        posts: [...state.posts, action.payload],
+      };
     });
-    builder.addCase(fetchAsyncGetMyProf.fulfilled, (state, action) => {
-      state.profiles = action.payload;
+    builder.addCase(fetchAsyncPatchLiked.fulfilled, (state, action) => {
+      return {
+        ...state,
+        posts: state.posts.map((post) =>
+          post.id === action.payload.id ? action.payload : post
+        ),
+      };
     });
-    builder.addCase(fetchAsyncGetProfs.fulfilled, (state, action) => {
-      state.profiles = action.payload;
+    builder.addCase(fetchAsyncGetComments.fulfilled, (state, action) => {
+      return {
+        ...state,
+        comments: action.payload,
+      };
     });
-    builder.addCase(fetchAsyncUpdateProf.fulfilled, (state, action) => {
-      state.myprofile = action.payload;
-      state.profiles = state.profiles.map((prof) =>
-        prof.id === action.payload.id ? action.payload : prof
-      );
+    builder.addCase(fetchAsyncPostComment.fulfilled, (state, action) => {
+      return {
+        ...state,
+        comments: [...state.comments, action.payload],
+      };
     });
   },
 });
 
 export const {
-  fetchCredStart,
-  fetchCredEnd,
-  setOpenSignIn,
-  resetOpenSignIn,
-  setOpenSignUp,
-  resetOpenSignUp,
-  setOpenProfile,
-  resetOpenProfile,
-  editNickname,
+  fetchPostStart,
+  fetchPostEnd,
+  setOpenNewPost,
+  resetOpenNewPost,
 } = postSlice.actions;
 
 export const selectIsLoadingpost = (state: RootState) =>
