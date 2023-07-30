@@ -40,3 +40,15 @@ export interface PROPS_COMMENT {
   text: string;
   post: number;
 }
+
+/**
+ * Post.tsx
+ */
+export interface PROPS_NEWPOST {
+  postId: number;
+  loginId: number;
+  userPost: number;
+  title: string;
+  imageUrl: string;
+  liked: number[];
+}
