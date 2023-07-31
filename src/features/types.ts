@@ -44,7 +44,7 @@ export interface PROPS_COMMENT {
 /**
  * Post.tsx
  */
-export interface PROPS_NEWPOST {
+export interface PROPS_POST {
   postId: number;
   loginId: number;
   userPost: number;
