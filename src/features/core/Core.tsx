@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import Auth from "../auth/auth";
-import styles from "./Core.module.css";
 
+import styles from "./Core.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch } from "../../app/store";
 
-import { styled, withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core/styles";
 import {
   Button,
   Grid,
@@ -38,9 +37,14 @@ import {
   fetchAsyncGetPosts,
   fetchAsyncGetComments,
 } from "../post/postSlice";
+import Auth from "../auth/auth";
 
-const StyledBadge = styled(Badge)(({ theme }) => ({
-  "& .MuiBadge-badge": {
+// import Post from "../post/Post";
+// import EditProfile from "./EditProfile";
+// import NewPost from "./NewPost";
+
+const StyledBadge = withStyles((theme) => ({
+  badge: {
     backgroundColor: "#44b700",
     color: "#44b700",
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
@@ -51,7 +55,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
       width: "100%",
       height: "100%",
       borderRadius: "50%",
-      animation: "ripple 1.2s infinite ease-in-out",
+      animation: "$ripple 1.2s infinite ease-in-out",
       border: "1px solid currentColor",
       content: '""',
     },
@@ -66,7 +70,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
       opacity: 0,
     },
   },
-}));
+}))(Badge);
 
 const Core: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -95,6 +99,8 @@ const Core: React.FC = () => {
   return (
     <div>
       <Auth />
+      {/* <EditProfile />
+      <NewPost /> */}
       <div className={styles.core_header}>
         <h1 className={styles.core_title}>SNS clone</h1>
         {profile?.nickName ? (
@@ -103,12 +109,13 @@ const Core: React.FC = () => {
               className={styles.core_btnModal}
               onClick={() => {
                 dispatch(setOpenNewPost());
-                dispatch(setOpenProfile());
+                dispatch(resetOpenProfile());
               }}
             >
               <MdAddAPhoto />
             </button>
             <div className={styles.core_logout}>
+              {(isLoadingPost || isLoadingAuth) && <CircularProgress />}
               <Button
                 onClick={() => {
                   localStorage.removeItem("localJWT");
@@ -120,12 +127,71 @@ const Core: React.FC = () => {
               >
                 Logout
               </Button>
+              <button
+                className={styles.core_btnModal}
+                onClick={() => {
+                  dispatch(setOpenProfile());
+                  dispatch(resetOpenNewPost());
+                }}
+              >
+                <StyledBadge
+                  overlap="circle"
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "right",
+                  }}
+                  variant="dot"
+                >
+                  <Avatar alt="who?" src={profile.img} />{" "}
+                </StyledBadge>
+              </button>
             </div>
           </>
         ) : (
-          <div></div>
+          <div>
+            <Button
+              onClick={() => {
+                dispatch(setOpenSignIn());
+                dispatch(resetOpenSignUp());
+              }}
+            >
+              LogIn
+            </Button>
+            <Button
+              onClick={() => {
+                dispatch(setOpenSignUp());
+                dispatch(resetOpenSignIn());
+              }}
+            >
+              SignUp
+            </Button>
+          </div>
         )}
       </div>
+
+      {profile?.nickName && (
+        <>
+          <div className={styles.core_posts}>
+            <Grid container spacing={4}>
+              {posts
+                .slice(0)
+                .reverse()
+                .map((post) => (
+                  <Grid key={post.id} item xs={12} md={4}>
+                    {/* <Post
+                      postId={post.id}
+                      title={post.title}
+                      loginId={profile.userProfile}
+                      userPost={post.userPost}
+                      imageUrl={post.img}
+                      liked={post.liked}
+                    /> */}
+                  </Grid>
+                ))}
+            </Grid>
+          </div>
+        </>
+      )}
     </div>
   );
 };
