@@ -38,6 +38,7 @@ import {
   fetchAsyncGetComments,
 } from "../post/postSlice";
 import Auth from "../auth/auth";
+import Post from "../post/post";
 
 // import Post from "../post/Post";
 // import EditProfile from "./EditProfile";
@@ -178,14 +179,14 @@ const Core: React.FC = () => {
                 .reverse()
                 .map((post) => (
                   <Grid key={post.id} item xs={12} md={4}>
-                    {/* <Post
+                    <Post
                       postId={post.id}
                       title={post.title}
                       loginId={profile.userProfile}
                       userPost={post.userPost}
                       imageUrl={post.img}
                       liked={post.liked}
-                    /> */}
+                    />
                   </Grid>
                 ))}
             </Grid>
