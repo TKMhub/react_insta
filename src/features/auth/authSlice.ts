@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { RootState } from "../../app/store";
 import axios from "axios";
 import { PROPS_AUTHEN, PROPS_PROFILE, PROPS_NICKNAME } from "../types";
@@ -42,15 +42,6 @@ export const fetchAsyncCreateProf = createAsyncThunk(
   }
 );
 
-export const fetchAsyncGetProfs = createAsyncThunk("profiles/get", async () => {
-  const res = await axios.get(`${apiUrl}api/profile/`, {
-    headers: {
-      Authorization: `JWT ${localStorage.localJWT}`,
-    },
-  });
-  return res.data;
-});
-
 export const fetchAsyncUpdateProf = createAsyncThunk(
   "profile/put",
   async (profile: PROPS_PROFILE) => {
@@ -80,6 +71,15 @@ export const fetchAsyncGetMyProf = createAsyncThunk("profile/get", async () => {
   return res.data[0];
 });
 
+export const fetchAsyncGetProfs = createAsyncThunk("profiles/get", async () => {
+  const res = await axios.get(`${apiUrl}api/profile/`, {
+    headers: {
+      Authorization: `JWT ${localStorage.localJWT}`,
+    },
+  });
+  return res.data;
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState: {
@@ -91,7 +91,7 @@ export const authSlice = createSlice({
       id: 0,
       nickName: "",
       userProfile: 0,
-      create_on: "",
+      created_on: "",
       img: "",
     },
     profiles: [
@@ -99,7 +99,7 @@ export const authSlice = createSlice({
         id: 0,
         nickName: "",
         userProfile: 0,
-        create_on: "",
+        created_on: "",
         img: "",
       },
     ],
@@ -141,7 +141,7 @@ export const authSlice = createSlice({
       state.myprofile = action.payload;
     });
     builder.addCase(fetchAsyncGetMyProf.fulfilled, (state, action) => {
-      state.profiles = action.payload;
+      state.myprofile = action.payload;
     });
     builder.addCase(fetchAsyncGetProfs.fulfilled, (state, action) => {
       state.profiles = action.payload;

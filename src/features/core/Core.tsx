@@ -106,7 +106,6 @@ const Core: React.FC = () => {
                 dispatch(setOpenProfile());
               }}
             >
-              <h1 className={styles.core_title}>SNS clone</h1>
               <MdAddAPhoto />
             </button>
             <div className={styles.core_logout}>
