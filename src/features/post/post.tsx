@@ -87,18 +87,18 @@ const Post: React.FC<PROPS_POST> = ({
             className={styles.post_checkBox}
             icon={<FavoriteBorder />}
             checkedIcon={<Favorite />}
-            // checked={liked.some((like) => like === loginId)}
+            checked={liked.some((like) => like === loginId)}
             onChange={handlerLiked}
           />
           <strong> {prof[0]?.nickName}</strong> {title}
           <AvatarGroup max={7}>
-            {/* {liked.map((like) => (
+            {liked.map((like) => (
               <Avatar
                 className={styles.post_avatarGroup}
                 key={like}
                 src={profiles.find((prof) => prof.userProfile === like)?.img}
               />
-            ))} */}
+            ))}
           </AvatarGroup>
         </h4>
 
