@@ -39,6 +39,8 @@ import {
 } from "../post/postSlice";
 import Auth from "../auth/auth";
 import Post from "../post/post";
+import EditProfile from "./EditProfile";
+import NewPost from "./NewPost";
 
 // import Post from "../post/Post";
 // import EditProfile from "./EditProfile";
@@ -100,8 +102,8 @@ const Core: React.FC = () => {
   return (
     <div>
       <Auth />
-      {/* <EditProfile />
-      <NewPost /> */}
+      <EditProfile />
+      <NewPost />
       <div className={styles.core_header}>
         <h1 className={styles.core_title}>SNS clone</h1>
         {profile?.nickName ? (
